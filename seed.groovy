@@ -4,7 +4,7 @@
         'scm'(class:'hudson.plugins.git.GitSCM',plugin:'git') {
           'userRemoteConfigs' {
             'hudson.plugins.git.UserRemoteConfig' {
-              'url'('https://github.com/PradeepreddyKapa/jenkins_practice.git')
+              'url'('https://github.com/PradeepreddyKapa/frontend.git')
             }
           }
           'branches' {
