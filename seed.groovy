@@ -1,83 +1,35 @@
-  pipelineJob("frontend-ci") {
-    configure { flowdefinition ->
-      flowdefinition << delegate.'definition'(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition',plugin:'workflow-cps') {
-        'scm'(class:'hudson.plugins.git.GitSCM',plugin:'git') {
-          'userRemoteConfigs' {
-            'hudson.plugins.git.UserRemoteConfig' {
-              'url'('https://github.com/PradeepreddyKapa/frontend.git')
-            }
-          }
-          'branches' {
-            'hudson.plugins.git.BranchSpec' {
-              'name'('*/main')
-            }
-          }
-        }
-        'scriptPath'('jenkinsfile')
-        'lightweight'(true)
-      }
-    }
-  }
+folder('CI-Pipelines'){
+  displayName('CI-Pipeline')
+  description('CI-Pipeline')
+}
 
-  pipelineJob("login-ci") {
-    configure { flowdefinition ->
-      flowdefinition << delegate.'definition'(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition',plugin:'workflow-cps') {
-        'scm'(class:'hudson.plugins.git.GitSCM',plugin:'git') {
-          'userRemoteConfigs' {
-            'hudson.plugins.git.UserRemoteConfig' {
-              'url'('https://github.com/PradeepreddyKapa/login.git')
-            }
-          }
-          'branches' {
-            'hudson.plugins.git.BranchSpec' {
-              'name'('*/main')
-            }
-          }
-        }
-        'scriptPath'('jenkinsfile')
-        'lightweight'(true)
-      }
-    }
-  }
+def component = ["frontend", "login", "users", "todo"]
 
-  pipelineJob("users-ci") {
-    configure { flowdefinition ->
-      flowdefinition << delegate.'definition'(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition',plugin:'workflow-cps') {
-        'scm'(class:'hudson.plugins.git.GitSCM',plugin:'git') {
-          'userRemoteConfigs' {
-            'hudson.plugins.git.UserRemoteConfig' {
-              'url'('https://github.com/PradeepreddyKapa/users.git')
-            }
-          }
-          'branches' {
-            'hudson.plugins.git.BranchSpec' {
-              'name'('*/main')
-            }
-          }
-        }
-        'scriptPath'('jenkinsfile')
-        'lightweight'(true)
-      }
-    }
-  }
+def count=(component.size()-1)
+for (i in 0..count) {
+    def j = component[i]
+    pipelinejob("CI-Pipelines/${j}-ci") {
+        configure { flowdefinition ->
+            flowdefinition << delegate.'definition'(class: 'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition', plugin: 'workflow-cps') {
+                'scm'(class: 'hudson.plugins.git.GitSCM', plugin: 'git') {
+                    'userRemoteConfigs' {
+                        'hudson.plugins.git.UserRemoteConfig' {
+                            'url'('https://github.com/PradeepreddyKapa/' + j + '.git')
+                            'refspec'('\'+refs/tags/*\':\'refs/remotes/origin/tags/*\'')
 
-  pipelineJob("todo-ci") {
-    configure { flowdefinition ->
-      flowdefinition << delegate.'definition'(class:'org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition',plugin:'workflow-cps') {
-        'scm'(class:'hudson.plugins.git.GitSCM',plugin:'git') {
-          'userRemoteConfigs' {
-            'hudson.plugins.git.UserRemoteConfig' {
-              'url'('https://github.com/PradeepreddyKapa/todo.git')
+                        }
+                    }
+                    'branches' {
+                        'hudson.plugins.git.BranchSpec' {
+                            'name'('*/main')
+                        }
+                    }
+                }
+                'scriptPath'('jenkinsfile')
+                'lightweight'(true)
             }
-          }
-          'branches' {
-            'hudson.plugins.git.BranchSpec' {
-              'name'('*/main')
-            }
-          }
         }
-        'scriptPath'('jenkinsfile')
-        'lightweight'(true)
-      }
     }
-  }
+
+}
+
