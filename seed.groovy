@@ -3,7 +3,7 @@ folder('CI-Pipelines') {
     description('CI Pipelines')
 }
 
-def component = ["frontend", "login","users","todo"]
+def component = ["frontend", "login","users","todo"];
 
 def count=(component.size()-1)
 for (i in 0..count) {
@@ -24,10 +24,9 @@ for (i in 0..count) {
                         }
                     }
                 }
-                'scriptPath'('jenkinsfile')
+                'scriptPath'('Jenkinsfile')
                 'lightweight'(true)
             }
         }
     }
 }
-
