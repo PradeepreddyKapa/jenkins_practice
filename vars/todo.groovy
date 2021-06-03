@@ -22,39 +22,12 @@ def call (Map params = [:]){
 
         stages {
 
-            stage ('Build code'){
-                when {
-                    environment name : 'APP_TYPE', value : 'MAVEN'
+            stage ('Build code & Download Dependencies'){
+                script {
+                    prepare = new nexus ()
+                    prepare.code_build("${APP_TYPE}","${COMPONENT}")
                 }
 
-                steps {
-                    sh '''
-                  mvn clean package
-                '''
-
-                }
-            }
-
-            stage ('Code Build'){
-                when {
-                    environment name : 'APP_TYPE', value : 'GO'
-                }
-                steps {
-                    sh '''
-                 go get github.com/dgrijalva/jwt-go && go get github.com/labstack/echo && go get github.com/labstack/echo/middleware && go get github.com/labstack/gommon/log && go get github.com/openzipkin/zipkin-go && go get github.com/openzipkin/zipkin-go/middleware/http && go get github.com/openzipkin/zipkin-go/reporter/http &&  go build
-                 '''
-                }
-            }
-
-            stage ('Code Build for nodejs'){
-                when {
-                    environment name : 'APP_TYPE', value : 'NODEJS'
-                }
-                steps {
-                    sh '''
-                 npm install
-                 '''
-                }
             }
 
             stage ('Prepare Artifacts'){
