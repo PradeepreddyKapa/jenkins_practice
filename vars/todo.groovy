@@ -57,7 +57,7 @@ def call (Map params = [:]){
             }
             stage ('Code Build'){
                 when {
-                    environmet name : 'APP_TYPE', value : 'GO'
+                    environment name : 'APP_TYPE', value : 'GO'
                 }
                 steps {
                     sh '''
