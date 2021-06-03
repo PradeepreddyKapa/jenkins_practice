@@ -55,6 +55,26 @@ def call (Map params = [:]){
 
                 }
             }
+            stage ('Code Build'){
+                when {
+                    environmet name : 'APP_TYPE', value : 'GO'
+                }
+                steps {
+                    sh '''
+                 go get github.com/dgrijalva/jwt-go && go get github.com/labstack/echo && go get github.com/labstack/echo/middleware && go get github.com/labstack/gommon/log && go get github.com/openzipkin/zipkin-go && go get github.com/openzipkin/zipkin-go/middleware/http && go get github.com/openzipkin/zipkin-go/reporter/http &&  go build
+                 '''
+                }
+            }
+
+            stage ('Prepare Artifacts for login'){
+
+                steps {
+                    sh '''
+                zip -r ${COMPONENT}.zip login-ci
+                '''
+
+                }
+            }
 
 
 
