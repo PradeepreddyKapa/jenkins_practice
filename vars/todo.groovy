@@ -23,9 +23,11 @@ def call (Map params = [:]){
         stages {
 
             stage ('Build code & Download Dependencies'){
-                script {
-                    prepare = new nexus ()
-                    prepare.code_build("${APP_TYPE}","${COMPONENT}")
+                steps {
+                    script {
+                        prepare = new nexus ()
+                        prepare.code_build("${APP_TYPE}","${COMPONENT}")
+                    }
                 }
 
             }
