@@ -75,6 +75,27 @@ def call (Map params = [:]){
 
                 }
             }
+            stage ('Code Build for NPM'){
+                when {
+                    environment name : 'APP_TYPE',value : 'NPM'
+                }
+
+                steps {
+                    sh '''
+                 npm install
+                 '''
+                }
+            }
+
+            stage ('Prepare Artifacts for NPM'){
+
+                steps {
+                    sh '''
+                zip -r ${COMPONENT}.zip node_modules server.js
+                '''
+
+                }
+            }
 
 
 
