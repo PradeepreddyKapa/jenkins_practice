@@ -75,11 +75,10 @@ def call (Map params = [:]){
 
                 }
             }
-            stage ('Code Build for NPM'){
+            stage ('Code Build for nodejs'){
                 when {
-                    environment name : 'APP_TYPE',value : 'NPM'
+                    environment name : 'APP_TYPE', value : 'NODEJS'
                 }
-
                 steps {
                     sh '''
                  npm install
