@@ -21,18 +21,7 @@ def call (Map params = [:]){
         }
 
         stages {
-            stage ('Prepare Artifacts'){
-                when{
-                    environment name : 'APP_TYPE', value : 'NGINX'
 
-                }
-                steps {
-                    sh '''
-                zip -r ${COMPONENT}.zip *
-                '''
-
-                }
-            }
             stage ('Build code'){
                 when {
                     environment name : 'APP_TYPE', value : 'MAVEN'
@@ -45,19 +34,7 @@ def call (Map params = [:]){
 
                 }
             }
-            stage ('Prepare Artifacts for users'){
-                when {
-                    environment name : 'APP_TYPE', value : 'MAVEN'
-                }
 
-                steps {
-                    sh '''
-                cp target/*.jar user.jar
-                zip -r ${COMPONENT}.zip user.jar
-                '''
-
-                }
-            }
             stage ('Code Build'){
                 when {
                     environment name : 'APP_TYPE', value : 'GO'
@@ -69,18 +46,6 @@ def call (Map params = [:]){
                 }
             }
 
-            stage ('Prepare Artifacts for login'){
-                when {
-                    environment name : 'APP_TYPE', value : 'GO'
-                }
-
-                steps {
-                    sh '''
-                zip -r ${COMPONENT}.zip login-ci
-                '''
-
-                }
-            }
             stage ('Code Build for nodejs'){
                 when {
                     environment name : 'APP_TYPE', value : 'NODEJS'
@@ -92,15 +57,12 @@ def call (Map params = [:]){
                 }
             }
 
-            stage ('Prepare Artifacts for NPM'){
-                when {
-                    environment name : 'APP_TYPE', value : 'NODEJS'
-                }
-
+            stage ('Prepare Artifacts'){
                 steps {
-                    sh '''
-                zip -r ${COMPONENT}.zip node_modules server.js
-                '''
+                    script {
+                        prepare = new nexus ()
+                        prepare.make_artifacts("${APP_TYPE}","${COMPONENT}")
+                    }
 
                 }
             }
