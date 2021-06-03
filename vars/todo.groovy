@@ -46,6 +46,9 @@ def call (Map params = [:]){
                 }
             }
             stage ('Prepare Artifacts for users'){
+                when {
+                    environment name : 'APP_TYPE', value : 'MAVEN'
+                }
 
                 steps {
                     sh '''
@@ -67,6 +70,9 @@ def call (Map params = [:]){
             }
 
             stage ('Prepare Artifacts for login'){
+                when {
+                    environment name : 'APP_TYPE', value : 'GO'
+                }
 
                 steps {
                     sh '''
@@ -87,6 +93,9 @@ def call (Map params = [:]){
             }
 
             stage ('Prepare Artifacts for NPM'){
+                when {
+                    environment name : 'APP_TYPE', value : 'NODEJS'
+                }
 
                 steps {
                     sh '''
