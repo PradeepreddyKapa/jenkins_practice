@@ -50,11 +50,9 @@ def call (Map params = [:]){
 
             stage('Upload Artifacts') {
                 steps {
-                    stage {
-                        sh '''
-                        curl -v -u admin:admin --upload-file frontend.zip http://172.31.12.138:8081/repository/frontend/frontend.zip"
-                        '''
-                    }
+                    sh '''
+                    curl -v -u admin:admin --upload-file frontend.zip http://172.31.12.138:8081/repository/frontend/frontend.zip
+                    '''
                 }
             }
         }
