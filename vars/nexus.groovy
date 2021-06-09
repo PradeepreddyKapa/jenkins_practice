@@ -1,6 +1,11 @@
-def nexus () {
-    command = "curl -v -u admin:admin --upload-file frontend.zip http://172.31.12.138:8081/repository/frontend/frontend.zip"
+def nexus(COMPONENT) {
+    get_branch = "env | grep GIT_BRANCH | awk -F / '{print \$NF}' | xargs echo -n"
+    def get_branch_exec=sh(returnStdout: true, script: get_branch)
+    def FILENAME=COMPONENT+'-'+get_branch_exec+'.zip'
+
+    command = "curl -f -v -u admin:admin123 --upload-file ${FILENAME} http://172.31.12.138:8081/repository/${COMPONENT}/${FILENAME}"
     def execute_state=sh(returnStdout: true, script: command)
+    manager.addShortText("deployed")
 }
 
 def make_artifacts(APP_TYPE, COMPONENT) {
