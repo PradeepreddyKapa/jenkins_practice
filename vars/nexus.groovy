@@ -2,6 +2,7 @@ def nexus () {
     get branch ="env | grep GIT_BRANCH | awk -F / '{print \$NF}' | xargs echo -n"
     def get_branch_exec=sh(returnStdout: true, script: get_branch)
     def FILENAME=COMPONENT+'-'+get_branch_exec+'.zip'
+
     command = "curl -v -u admin:admin --upload-file ${FILENAME} http://172.31.12.138:8081/repository/${COMPONENT}/${FILENAME}"
     def execute_state=sh(returnStdout: true, script: command)
 }
