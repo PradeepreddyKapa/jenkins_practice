@@ -1,5 +1,3 @@
-//file:noinspection unused
-//file:noinspection GroovyUnusedAssignment
 def nexus () {
     get branch ="env | grep GIT_BRANCH | awk -F / '{print \$NF}' | xargs echo -n"
     def get_branch_exec=sh(returnStdout: true, script: get_branch)
