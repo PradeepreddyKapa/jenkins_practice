@@ -26,7 +26,7 @@ def call (Map params = [:]){
 
         stages {
 
-            stage ('Build code & Download Dependencies'){
+            stage ('Build code & Download Dependencies') {
                 steps {
                     script {
                         prepare = new nexus ()
@@ -36,7 +36,7 @@ def call (Map params = [:]){
 
             }
 
-            stage ('Prepare Artifacts'){
+            stage ('Prepare Artifacts') {
                 steps {
                     script {
                         prepare = new nexus ()
