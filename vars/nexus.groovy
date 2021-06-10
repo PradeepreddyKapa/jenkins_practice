@@ -7,7 +7,7 @@ def nexus () {
 }
 
 def make_artifacts(APP_TYPE, COMPONENT) {
-    get branch ="env | grep GIT_BRANCH | awk -F / '{print \$NF}' | xargs echo -n"
+    get branch = "env | grep GIT_BRANCH | awk -F / '{print \$NF}' | xargs echo -n"
     def get_branch_exec=sh(returnStdout: true, script: get_branch)
     def FILENAME=COMPONENT+'-'+get_branch_exec+'.zip'
     if(APP_TYPE == "NGINX" ) {
