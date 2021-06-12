@@ -44,10 +44,6 @@ def code_build(APP_TYPE, COMPONENT) {
         command = " npm install "
         def execute_com=sh(returnStdout: true, script: command )
         print execute_com
-    }   else if(APP_TYPE == "NGINX") {
-        command = "npm install && npm run build"
-        def execute_com = sh(returnStdout: true, script: command )
-        print execute_com
     }
 
 }
