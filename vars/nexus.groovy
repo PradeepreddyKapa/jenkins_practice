@@ -32,7 +32,11 @@ def make_artifacts(APP_TYPE, COMPONENT) {
 }
 
 def code_build(APP_TYPE, COMPONENT) {
-    if(APP_TYPE == "MAVEN"){
+    if(APP_TYPE == "NGINX"){
+        command = "npm install && npm run build"
+        def execute_com=sh(returnStdout: true, script: command)
+        print execute_com
+    }   else if(APP_TYPE == "MAVEN"){
         command = " mvn clean package "
         def execute_com=sh(returnStdout: true, script: command )
         print execute_com
